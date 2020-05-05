@@ -1,0 +1,317 @@
+ENTRY   DSECT
+ID       DS    CL4
+TEST1    DS    CL1
+TEST2    DS    CL1
+HMWKNU   DS    CL2
+QUIZT    DS    CL1
+************************************************************
+* MAIN SUBROUTINE
+************************************************************
+MAIN     CSECT
+         STM   14,12,12(13)            
+         LR    12,15                   
+         USING MAIN,12                
+         LA    14,MAINSAVE             
+         ST    14,8(0,13)              
+         ST    13,4(0,14)              
+         LR    13,14
+*
+         LA    1,PARMSB                LOAD
+         L     10,=V(BUILD)            LOAD BUILD
+         BALR  14,10                   BRANCH
+         XDUMP TABLE,140
+         LA    1,PARMSP                
+         L     10,=V(PRINT)            
+         BALR  14,10                   
+         XPRNT ELINE,1                 
+         LA    1,PARMSS                
+         L     10,=V(SORTID)           
+         BALR  14,10                   
+         XPRNT ELINE,1                 
+         LA    1,PARMSP2               
+         L     10,=V(PRINT)            
+         BALR  14,10                   
+*
+         L     13,4(0,13)              EXIT LINKAGE
+         LM    14,12,12(13)
+         BR    14                      END OF MAIN PROGRAM
+*
+         LTORG
+         ORG   MAIN+((*-MAIN+31)/32)*32
+         DS    0D
+TABLE    DC    20CL9'FF'
+EOT      DS    F
+F        DC    8X'FFFFFFFF'
+PARMSB   DC    A(TABLE)
+         DC    A(EOT)
+PARMSP   DC    A(TABLE)
+         DC    A(EOT)
+         DC    A(HEAD1)
+PARMSS   DC    A(TABLE)
+         DC    A(EOT)
+         DC    A(HEAD2)
+PARMSP2  DC    A(TABLE)
+         DC    A(EOT)
+         DC    A(HEAD2)
+HEAD1    DC    CL50'1                               CSCI 359 Grades   '
+HEAD2    DC    CL50'1                            CSCI 359 Grades by ID'
+ELINE    DC    C'-'
+MAINSAVE DS    18F
+         EJECT
+         SPACE
+*****************************************************************
+*  BUILD SUBROUTINE
+*****************************************************************
+BUILD    CSECT
+         STM   14,12,12(13)
+         LR    12,15
+         USING BUILD,10  External register is R10
+         LA    14,BSAVE
+         ST    13,4(,14)
+         ST    14,8(,13)
+         LR    13,14
+*
+         LM    7,8,0(1)                
+         USING ENTRY,7
+BREAD    XREAD BUFFER,80               
+         BL    BEND                    
+         LA    1,BUFFER
+BLOOP    DS    0H
+         PACK  BTEMP(8),1(7,1)
+         CVB   2,BTEMP
+         STCM  2,B'1111',ID
+*TEST1
+         ZAP   BTEMP(8),=P'0'
+         PACK  BTEMP(8),10(3,1)
+         CVB   2,BTEMP
+         SLL   2,1
+         STCM  2,B'0001',TEST1
+         CLC   31(1,1),=C'I'
+         BNE   BNOTI
+         OI    TEST1,B'00000001'
+*TEST2
+BNOTI    ZAP   BTEMP(8),=P'0'
+         PACK  BTEMP(8),15(3,1)
+         CVB   2,BTEMP
+         SLL   2,1
+         STCM  2,B'0001',TEST2
+         CLC   28(1,1),=C'W'
+         BNE   BNOTW
+         OI    TEST2,B'00000001'
+*HMWKNU(NUMBER OF HOMEWORK)
+BNOTW    ZAP   BTEMP(8),=P'0'
+         PACK  BTEMP(8),20(1,1)
+         CVB   2,BTEMP
+         SLL   2,29
+*HMWKNU(HOMEWORK TOTAL)
+         ZAP   BTEMP(8),=P'0'
+         PACK  BTEMP(8),23(3,1)
+         CVB   3,BTEMP
+         SLL   3,19
+*HMWKNU(NUMBER OF QUIZZES)
+         ZAP   BTEMP(8),=P'0'
+         PACK  BTEMP(8),34(1,1)
+         CVB   4,BTEMP
+         SLL   4,16
+*QUIZT
+         ZAP   BTEMP(8),=P'0'
+         PACK  BTEMP(8),37(2,1)
+         CVB   5,BTEMP
+         SLL   5,1
+*
+         AR    2,3
+         AR    2,4
+         STCM  2,B'1100',HMWKNU
+         STCM  5,B'0001',QUIZT
+*
+         LA    7,9(0,7)
+         B     BREAD               
+*
+BEND     DS    0H
+         ST    7,0(0,8)
+         L     13,4(,13)
+         LM    14,12,12(13)
+         BR    14
+         LTORG
+BUFFER   DC    80C' '
+         DC    C'*'
+BTEMP    DS    D
+BSTATUS  DC    X'01'
+BSAVE    DS    18F'0'
+**************************************************************
+*  PRINT SUBROUTINE
+**************************************************************
+PRINT    CSECT
+         STM   14,12,12(13)            
+         LR    12,15                  
+         USING PRINT,10                
+         LA    14,PRSVE                
+         ST    13,4(,14)               
+         ST    14,8(,13)               
+         LR    13,14
+*
+         LM    7,9,0(1)
+         USING ENTRY,7
+PHEADDER XPRNT 0(,9),50
+         XPRNT PHEAD,90                
+         XPRNT PHEAD2,89               
+PLOOP    C     7,0(0,8)
+         BC    B'0010',PEND
+         MVC   TEMPD(8),ID
+         L     2,TEMPD
+         CVD   2,TEMPD                     
+         MVC   PID(8),=X'F021202020202020'
+         ED    PID(8),TEMPD+4
+         MVI   PLINE+1,C'R'
+*
+         MVC   TEMPX(1),TEST1
+         TM    TEMPX,B'00000001'
+         BNE   PIFLAGL
+PRTEST1  MVC   TEMPD(1),TEST1
+         L     2,TEMPD
+         SRL   2,25                        
+         CVD   2,TEMPD                     
+         MVC   PRTEST(4),=X'40212020'      
+         ED    PRTEST(4),TEMPD+6           
+*
+         MVC   TEMPX(1),TEST2
+         NC    TEMPX(1),=B'00000001'
+         CLC   TEMPX(1),=B'00000001'
+         BE    PWFLAGL
+PRTEST2  MVC   TEMPD(1),TEST2
+         L     2,TEMPD
+         SRL   2,25                        
+         CVD   2,TEMPD                     
+         MVC   PRTES2(4),=X'40212020'
+         ED    PRTES2(4),TEMPD+6
+*
+         MVC   TEMPD(8),HMWKNU
+         L     2,TEMPD
+         SRL   2,29                        
+         CVD   2,TEMPD                     
+         MVC   HMWKNP(2),=X'F021'
+         ED    HMWKNP(2),TEMPD+7
+         MVI   HMWKNP,C' '
+*
+         MVC   TEMPD(8),HMWKNU
+         L     2,TEMPD
+         SLL   2,3
+         SRL   2,22                        
+         CVD   2,TEMPD                     
+         MVC   HMWKTOTP(4),=X'4021202020'
+         ED    HMWKTOTP(4),TEMPD+6
+*
+         MVC   TEMPD(8),HMWKNU
+         L     2,TEMPD
+         SLL   2,13
+         SRL   2,29                        
+         CVD   2,TEMPD                     
+         MVC   PNUMQZ(2),=X'F021'
+         ED    PNUMQZ(2),TEMPD+7
+         MVI   PNUMQZ,C' '
+*
+         MVC   TEMPD(1),QUIZT
+         L     2,TEMPD
+         SRL   2,25                        
+         CVD   2,TEMPD                     
+         MVC   PTOTALQZ(4),=X'40212020'
+         ED    PTOTALQZ(4),TEMPD+6
+*
+         B     PENDL
+*
+PIFLAGL  DS    0H
+         MVC   PIFLAG(1),=C'I'
+         B     PRTEST1
+*
+PWFLAGL  DS    0H
+         MVC   PWFLAG(1),=C'W'
+         B     PRTEST2
+*
+PENDL    LA    7,9(0,7)
+         XPRNT PLINE,90
+         MVI   PLINE+1,C' '
+         MVC   PLINE+2(90),PLINE+1
+         B     PLOOP
+PEND     L     13,4(,13)
+         LM    14,12,12(13)
+         BR    14           End of subroutine
+         LTORG              Literals are put here
+PLINE    DC    1C' '
+PID      DC    9C' '
+         DC    2C' '
+PRTEST   DC    4C' '
+         DC    6C' '
+PRTES2   DC    4C' '
+         DC    8C' '
+HMWKNP   DC    2C' '
+         DC    7C' '
+HMWKTOTP DC    4C' '
+         DC    7C' '
+PNUMQZ   DC    2C' '
+         DC    7C' '
+PTOTALQZ DC    4C' '
+         DC    7C' '
+PWFLAG   DC    1C' '
+         DC    8C' '
+PIFLAG   DC    1C' '
+TEMPX    DS    X
+TEMPD    DS    D
+TEMPF    DS    F
+PHEAD    DC    CL40'    ID                         Number of'
+         DC    CL48' Homework  Number of    Quiz     With-     Incom'
+PHEAD2   DC    CL40'  Number     Test1    Test2    Homeworks'
+         DC    CL49'  Total     Quizzes     Total    draw?     plete?'  '
+PRSVE    DS    18F'0'
+***********************************************************************
+*  SORTID SUBROUTINE
+*  uses bubble sort like on the assignment description
+***********************************************************************
+SORTID   CSECT
+         STM   14,12,12(13)
+         LR    12,15
+         USING SORTID,10
+         LA    14,SAVES
+         ST    13,4(,14)
+         ST    14,8(,13)
+         LR    13,14
+         LM    7,8,0(1)     Load params into R3,R4, and R5
+*
+         L     2,0(,7)
+         L     8,0(,8)
+         S     8,=F'9'
+         USING ENTRY,2
+FOR      DS    0H           
+         S     8,=F'9'
+         LR    2,7
+         S     2,=F'9'
+         CR    2,8
+         BE    SEND
+         BH    SEND
+WHILE    DS    0H
+         A     2,=F'9'
+         CLC   0(4,2),9(2)     
+         BH    NOW              
+DONE     DS    0H
+         CR    2,8
+         BH    FOR
+         BL    WHILE
+         B     FOR             
+*
+NOW      DS    0H              
+         MVC   STEMP(9),0(2)
+         MVC   0(9,2),9(2)
+         MVC   9(9,2),STEMP
+         B     DONE             
+*
+SEND     L     13,4(,13)
+         LM    14,12,12(13)
+         BR    14
+         LTORG
+STEMP    DS    9C
+SAVES    DS    18F'0'
+***********************************
+         END   MAIN
+
+/*
+//FT05F001  DD  DSN=KC02314.AUTUMN19.CSCI360.HW8DATA,DISP=SHR
+//
