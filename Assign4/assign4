@@ -1,0 +1,168 @@
+//KC03E18L JOB ,'Carlton Hunt',MSGCLASS=H
+//STEP1    EXEC  PGM=ASSIST
+//STEPLIB    DD  DSN=KC02293.ASSIST.LOADLIB,DISP=SHR
+//SYSPRINT   DD  SYSOUT=*
+//SYSIN      DD  *
+************************************************************
+*
+*			Assignment 4
+*  Name:	Carlton Hunt
+*
+*  Register usage:
+*    1        XDECI
+*   10
+*   13        params
+*   14
+*   15        Base register
+************************************************************
+MAIN     CSECT
+         USING MAIN,15
+         LA    13,TABLE     Load in TABLE
+         ST    13,PARMS     Store Table in PARMS
+         LA    13,EOT       Load address EOT
+         ST    13,PARMS+4   Store EOT in params
+         LA    13,TABLEL    Load TABLEL
+         ST    13,PARMS+8   Store TABLEL in PARMS
+         LA    13,PARMS     address PARMS in 13
+         BAL   10,BUILD     Build
+         BAL   10,PRINT     Print all
+         BAL   10,ODDS      Print all odd
+         BR    14           End
+***********************************
+*
+*  Register usage:
+*    1        XDECI
+*    2        Number in base10
+*    3        Table
+*    4        EOT
+*    5        TABLEL
+*    6        Counter
+*   10        Return address
+*   13        PARMS
+*   14
+*   15        Base register
+*
+***********************************
+BUILD    DS    0H           Start
+         SR    6,6          clear R6
+         LM    3,5,0(13)    Load PARMS
+BUILDL   XREAD BUFFER,80    Read the input file
+         BL    BEND         if failed
+         LA    1,BUFFER     Load buffer
+BUILDL1  XDECI 2,0(0,1)     Read number
+         BO    BUILDL       if read failed
+         A     6,=F'1'      Add one
+         ST    2,0(0,3)     Store number
+         LA    3,4(0,3)     load pointer
+         CR    3,4          Compare pointer
+         BE    BEND         If at EOT
+         B     BUILDL1      Go to top of loop
+BEND     ST    6,0(0,5)     Store
+         BR    10           End
+***********************************
+*
+*  Register usage:
+*    1        XDECI
+*    2        Line
+*    3        Table
+*    4        EOT
+*    5        TABLEL
+*    6        Width
+*    7        Value
+*   10
+*   13        PARMS
+*   14
+*   15        Base register
+*
+***********************************
+PRINT    DS    0H           Start
+         XPRNT PHEAD,44     Print header
+         LM    3,5,0(13)    Load PARMS into R3,R4, and R5
+         L     5,0(0,5)     Load TABLEL
+PRINTL   L     6,=F'6'      Counter
+         LA    2,PLINE+1    Set R2
+         MVI   PLINE+1,C' ' Clear line
+         MVC   PLINE+2(83),PLINE+1
+         C     5,=F'0'      if all values have been printed
+         BE    PEND         End
+PRINTL1  C     5,=F'0'      if all values have been printed
+         BE    PEND1        End
+         L     7,0(0,3)     Get current value
+         XDECO 7,TEMP
+         MVC   0(12,2),TEMP Store number in print line
+         LA    2,12(0,2)    Advance pointer
+         LA    3,4(0,3)     Advance pointer
+         S     5,=F'1'      Decrement counter
+         S     6,=F'1'      Decrement counter
+         C     6,=F'0'      if we have filled a line
+         BNE   PRINTL1      Go to top
+         XPRNT PLINE,85     Print
+         B     PRINTL       Go to top
+PEND1    XPRNT PLINE,85     Print
+PEND     BR    10           End
+***********************************
+*
+*  Register usage:
+*    1        XDECI
+*    2        Line
+*    3        table length
+*    4        EOT
+*    5        Length of table
+*    6        Table
+*    7
+*    8        counter
+*   10
+*   13
+*   14
+*   15        Base register
+*
+***********************************
+ODDS     DS    0H          start
+         XPRNT OHEAD,48     print header
+         LM    3,5,0(13)    load parms
+         L     5,0(0,5)     load table length
+PRINTOL  L     8,=F'7'      counter
+         LA    2,PLINE+1    pointer to print line
+         MVI   PLINE+1,C' ' clear
+         MVC   PLINE+2(83),PLINE+1
+         C     5,=F'0'      if table is printed
+         BE    OEND         go to end
+PRINTOL1 C     5,=F'0'      if table is printed
+         BE    OEND1        go to end
+         L     7,0(0,3)     load number
+         S     5,=F'1'      decrement length
+         M     6,=F'1'      if odd
+         D     6,=F'2'      if odd
+         C     6,=F'0'      if odd
+         BE    SKIP         skip
+         L     6,0(0,3)     load number
+         XDECO 6,TEMP
+         MVC   0(12,2),TEMP
+         LA    2,12(0,2)    move pointer
+         S     8,=F'1'      decrement counter
+SKIP     LA    3,4(0,3)     move pointer
+         C     8,=F'0'      if line full
+         BNE   PRINTOL1     go to top
+         XPRNT PLINE,85     print
+         B     PRINTOL      go to top
+OEND1    XPRNT PLINE,85     print
+OEND     BR    10           End
+***********************************
+         LTORG
+TABLE    DS    65F'-16'
+EOT      DS    0H
+TABLEL   DS    F'0'
+PHEAD    DC    CL44'1                            List of Numbers'
+OHEAD    DC    CL48'1                            List of Odd Numbers'
+TEMP     DS    CL12' '
+PARMS    DS    F'0'
+         DS    F'0'
+         DS    F'0'
+PLINE    DC    CL1'0'
+         DS    CL84' '
+BUFFER   DS    80C
+         DC    C'*'
+         END   MAIN
+/*
+//FT05F001  DD  DSN=KC02314.AUTUMN19.CSCI360.HW4DATA,DISP=SHR
+//
