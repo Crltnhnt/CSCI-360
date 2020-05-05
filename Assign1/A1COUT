@@ -1,0 +1,87 @@
+1                   J E S 2  J O B  L O G  --  S Y S T E M  2 9 6 4  --  N O D E  S V S C J E S 2        
+0 
+ 00.29.09 JOB00218 ---- FRIDAY,    13 SEP 2019 ----
+ 00.29.09 JOB00218  IRR010I  USERID KC03E18  IS ASSIGNED TO THIS JOB.
+ 00.29.09 JOB00218  ICH70001I KC03E18  LAST ACCESS AT 00:19:29 ON FRIDAY, SEPTEMBER 13, 2019
+ 00.29.09 JOB00218  $HASP373 KC03E18L STARTED - INIT 2    - CLASS A        - SYS 2964
+ 00.29.09 JOB00218  -                                      -----TIMINGS (MINS.)------                          -----PAGING COUNTS-
+ 00.29.09 JOB00218  -STEPNAME PROCSTEP    RC   EXCP   CONN       TCB       SRB  CLOCK          SERV  WORKLOAD  PAGE  SWAP   VIO SW
+ 00.29.09 JOB00218  -STEP1                00     22      3       .00       .00     .0             4  BATCH        0     0     0   
+ 00.29.09 JOB00218  -KC03E18L ENDED.  NAME-CARLTON HUNT         TOTAL TCB CPU TIME=      .00 TOTAL ELAPSED TIME=    .0
+ 00.29.09 JOB00218  $HASP395 KC03E18L ENDED - RC=0000
+0------ JES2 JOB STATISTICS ------
+-  13 SEP 2019 JOB EXECUTION DATE
+-           31 CARDS READ
+-           91 SYSOUT PRINT RECORDS
+-            0 SYSOUT PUNCH RECORDS
+-           11 SYSOUT SPOOL KBYTES
+-         0.00 MINUTES EXECUTION TIME
+         1 //KC03E18L JOB ,'CARLTON HUNT',MSGCLASS=H                               JOB00218
+         2 //STEP1 EXEC PGM=ASSIST                                                 00020000
+         3 //STEPLIB DD DSN=KC02293.ASSIST.LOADLIB,DISP=SHR                        00030000
+         4 //SYSPRINT DD SYSOUT=*                                                  00040000
+         5 //SYSIN DD *                                                            00050000
+ ICH70001I KC03E18  LAST ACCESS AT 00:19:29 ON FRIDAY, SEPTEMBER 13, 2019
+ IEFA111I KC03E18L IS USING THE FOLLOWING JOB RELATED SETTINGS:
+          SWA=ABOVE,TIOT SIZE=32K,DSENQSHR=DISALLOW,GDGBIAS=JOB
+ IEF236I ALLOC. FOR KC03E18L STEP1
+ IGD103I SMS ALLOCATED TO DDNAME STEPLIB
+ IEF237I JES2 ALLOCATED TO SYSPRINT
+ IEF237I JES2 ALLOCATED TO SYSIN
+ IEF142I KC03E18L STEP1 - STEP WAS EXECUTED - COND CODE 0000
+ IGD104I KC02293.ASSIST.LOADLIB                       RETAINED,  DDNAME=STEPLIB 
+ IEF285I   KC03E18.KC03E18L.JOB00218.D0000102.?         SYSOUT        
+ IEF285I   KC03E18.KC03E18L.JOB00218.D0000101.?         SYSIN         
+ IEF373I STEP/STEP1   /START 2019256.0029
+ IEF032I STEP/STEP1   /STOP  2019256.0029 
+         CPU:     0 HR  00 MIN  00.00 SEC    SRB:     0 HR  00 MIN  00.00 SEC    
+         VIRT:   584K  SYS:   244K  EXT:        0K  SYS:    11712K
+         ATB- REAL:                  4116K  SLOTS:                     0K
+              VIRT- ALLOC:      11M SHRD:       0M
+ IEF375I  JOB/KC03E18L/START 2019256.0029
+ IEF033I  JOB/KC03E18L/STOP  2019256.0029 
+         CPU:     0 HR  00 MIN  00.00 SEC    SRB:     0 HR  00 MIN  00.00 SEC    
+1*** ASSIST 4.0/A2-05/15/82  470/V7A/0:OS/VS2  INS=SDFP7/X=BGHO, CHECK/TRC/=1180, OPTS=CDKMPR FROM PENN ST*NIU COMPSCI*LT         
+0                                                                                                                                 
+0                                                                                                               PAGE    1         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+                                       1 ********************************************                            00060000         
+                                       2 * Assignment1 - Part c                                                  00070000         
+                                       3 *                                                                       00080000         
+                                       4 * NAME:   Carlton Hunt                                                  00090000         
+                                       5 *                                                                       00100000         
+                                       6 *                                                                       00110000         
+                                       7 ********************************************                            00120000         
+ 000000                                8 MAIN     CSECT                                                          00130000         
+ 000000                                9          USING MAIN,15                                                  00140000         
+ 000000 5810 F02C            0002C    10          L     1,44(0,15)         LOAD                                  00150000         
+ 000004 5820 F030            00030    11          L     2,48(0,15)         LOAD                                  00160000         
+ 000008 1A21                          12          AR    2,1                ADD REGISTER                          00170000         
+ 00000A 5020 F038            00038    13          ST    2,56(0,15)         STORE IN SUM                          00180000         
+ 00000E 5830 F02C            0002C    14          L     3,44(0,15)         LOAD NUM1 TO THREE                    00190000         
+ 000012 5840 F030            00030    15          L     4,48(0,15)         LOAD NUM2 TO FOUR                     00200000         
+ 000016 1B43                          16          SR    4,3                SUBTRACT REGISTER                     00210000         
+ 000018 5040 F034            00034    17          ST    4,52(0,15)         STORE IN DIFF                         00220000         
+ 00001C E060 F034 0004 00034          18          XDUMP 52(0,15),4         DUMP                                  00230000         
+ 000022 E060 F038 0004 00038          19          XDUMP 56(0,15),4         DUMP                                  00240000         
+ 000028 07FE                          20          BR    14                                                       00250000         
+ 00002C 00000043                      21 NUM1     DC    F'67'              INITIALIZE                            00260000         
+ 000030 000000CB                      22 NUM2     DC    F'203'             INITIALIZE                            00270000         
+ 000034                               23 DIFF     DS    F                  CREATE FULLWORD                       00280000         
+ 000038                               24 SUM      DS    F                  CREATE FULLWORD                       00290000         
+                                      25          END   MAIN                                                     00300000         
+0***  NO   STATEMENTS FLAGGED -  NO   WARNINGS,  NO   ERRORS                                                                      
+0*** DYNAMIC CORE AREA USED:  LOW:    1208 HIGH:     384 LEAVING:  491976 FREE BYTES. AVERAGE:       61 BYTES/STMT ***            
+0*** ASSEMBLY TIME =    0.000 SECS,    26000 STATEMENTS/SEC ***                                                                   
+0*** PROGRAM EXECUTION BEGINNING - ANY OUTPUT BEFORE EXECUTION TIME MESSAGE IS PRODUCED BY USER PROGRAM ***                       
+0BEGIN XSNAP - CALL     1 AT E0000022 USER STORAGE                                                                                
+0                             CORE ADDRESSES SPECIFIED-     000034 TO 000038                                                      
+ 000020   0004E060 F0380004 07FEF5F5 00000043    000000CB 00000088 0000010E F5F5F5F5   *....0.....55................5555*         
+0                                                                                                                                 
+0BEGIN XSNAP - CALL     2 AT E0000028 USER STORAGE                                                                                
+0                             CORE ADDRESSES SPECIFIED-     000038 TO 00003C                                                      
+ 000020   0004E060 F0380004 07FEF5F5 00000043    000000CB 00000088 0000010E F5F5F5F5   *....0.....55................5555*         
+0                                                                                                                                 
+0*** EXECUTION TIME =    0.000 SECS.        11 INSTRUCTIONS EXECUTED -    11000 INSTRUCTIONS/SEC ***                              
+0*** FIRST CARD NOT READ: NO CARDS READ:FILE UNOPENED                                                                             
+0*** AM004 - NORMAL USER TERMINATION BY RETURN ***                                                                                

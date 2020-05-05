@@ -1,0 +1,29 @@
+//KC03E18L JOB ,'Carlton Hunt',MSGCLASS=H                               00010000
+//STEP1 EXEC PGM=ASSIST                                                 00020000
+//STEPLIB DD DSN=KC02293.ASSIST.LOADLIB,DISP=SHR                        00030000
+//SYSPRINT DD SYSOUT=*                                                  00040000
+//SYSIN DD *                                                            00050000
+********************************************                            00060000
+* Assignment 1 - Part A                                                 00070000
+*                                                                       00080000
+* NAME:   Carlton Hunt                                                  00090000
+*                                                                       00100000
+* Register Usage                                                        00110000
+*                                                                       00120000
+*                                                                       00130000
+********************************************                            00140000
+MAIN     CSECT                                                          00150000
+         USING MAIN,15                                                  00160000
+         L     1,NUM1             LOAD REGISTER WITH FULLWORD           00170005
+         L     2,NUM2             LOAD REGISTER WITH FULLWORD           00180005
+         AR    1,2                ADD REGISTER ONE TO TWO               00190005
+         L     3,NUM1             LOAD REGISTER WITH FULLWORD           00200005
+         L     4,NUM2             LOAD REGISTER WITH FULLWORD           00210005
+         SR    4,3                SUBTRACT REGISTERS                    00220006
+         XDUMP                                                          00230006
+         BR    14                 STOP PROGRAM                          00240005
+NUM1     DS    F'67'              INITIALIZE FULLWORD AND LABEL         00250005
+NUM2     DS    F'203'             INITIALIZE FULLWORD AND LABEL         00260005
+         END   MAIN                                                     00270002
+/*                                                                      00280000
+//                                                                      00290000

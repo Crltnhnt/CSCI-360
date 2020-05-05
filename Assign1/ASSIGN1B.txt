@@ -1,0 +1,34 @@
+//KC03E18L JOB ,'Carlton Hunt',MSGCLASS=H                               00010000
+//STEP1 EXEC PGM=ASSIST                                                 00020000
+//STEPLIB DD DSN=KC02293.ASSIST.LOADLIB,DISP=SHR                        00030000
+//SYSPRINT DD SYSOUT=*                                                  00040000
+//SYSIN DD *                                                            00050000
+********************************************                            00060000
+* Assignment 1 - Part A                                                 00070000
+*                                                                       00080000
+* NAME:   Carlton Hunt                                                  00090000
+*                                                                       00100000
+* Register Usage                                                        00110000
+*                                                                       00120000
+*                                                                       00130000
+********************************************                            00140000
+MAIN     CSECT
+         USING MAIN,15
+         L     1,NUM1       Load NUM1 into R1
+         L     2,NUM2       Load NUM2 into R2
+         AR    2,1          Add R2 and R1, store in R2
+         ST    2,SUM        Store R2 in SUM
+         L     3,NUM1       Load NUM1 into R3
+         L     4,NUM2       Load NUM2 into R4
+         SR    4,3          Subtract R4 from R3, store in R4
+         ST    4,DIFF       Store R4 in DIFF
+         XDUMP SUM,4        Dump SUM
+         XDUMP DIFF,4       Dump DIFF
+         BR    14           End program
+NUM1     DC    F'67'        NUM1 = 249
+NUM2     DC    F'203'       NUM2 = 117
+DIFF     DS    F            DIFF
+SUM      DS    F            SUM
+         END   MAIN
+/*
+//

@@ -1,0 +1,32 @@
+//KC03E18L JOB ,'CARLTON HUNT',MSGCLASS=H                               00010000
+//STEP1 EXEC PGM=ASSIST                                                 00020000
+//STEPLIB DD DSN=KC02293.ASSIST.LOADLIB,DISP=SHR                        00030000
+//SYSPRINT DD SYSOUT=*                                                  00040000
+//SYSIN DD *                                                            00050000
+********************************************                            00060000
+* Assignment1 - Part c                                                  00070000
+*                                                                       00080000
+* NAME:   Carlton Hunt                                                  00090000
+*                                                                       00100000
+*                                                                       00110000
+********************************************                            00120000
+MAIN     CSECT                                                          00130000
+         USING MAIN,15                                                  00140000
+         L     1,44(0,15)         LOAD                                  00150000
+         L     2,48(0,15)         LOAD                                  00160000
+         AR    2,1                ADD REGISTER                          00170000
+         ST    2,56(0,15)         STORE IN SUM                          00180000
+         L     3,44(0,15)         LOAD NUM1 TO THREE                    00190000
+         L     4,48(0,15)         LOAD NUM2 TO FOUR                     00200000
+         SR    4,3                SUBTRACT REGISTER                     00210000
+         ST    4,52(0,15)         STORE IN DIFF                         00220000
+         XDUMP 52(0,15),4         DUMP                                  00230000
+         XDUMP 56(0,15),4         DUMP                                  00240000
+         BR    14                                                       00250000
+NUM1     DC    F'67'              INITIALIZE                            00260000
+NUM2     DC    F'203'             INITIALIZE                            00270000
+DIFF     DS    F                  CREATE FULLWORD                       00280000
+SUM      DS    F                  CREATE FULLWORD                       00290000
+         END   MAIN                                                     00300000
+/*                                                                      00310000
+//                                                                      00320000

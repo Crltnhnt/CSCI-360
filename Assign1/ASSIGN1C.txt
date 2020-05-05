@@ -1,0 +1,35 @@
+//KC03E18L JOB ,'CARLTON HUNT',MSGCLASS=H                               00010000
+//STEP1 EXEC PGM=ASSIST                                                 00020000
+//STEPLIB DD DSN=KC02293.ASSIST.LOADLIB,DISP=SHR                        00030000
+//SYSPRINT DD SYSOUT=*                                                  00040000
+//SYSIN DD *                                                            00050000
+********************************************                            00060000
+* Assignment1 - Part c                                                  00070000
+*                                                                       00080000
+* NAME:   Carlton Hunt                                                  00090000
+*                                                                       00100000
+* Register Usage                                                        00110000
+*                                                                       00120000
+*                                                                       00130000
+*                                                                       00140000
+*                                                                       00150000
+*                                                                       00160000
+********************************************                            00170000
+MAIN     CSECT                                                          00180000
+         USING MAIN,15                                                  00190000
+         L     1,44(0,15)         LOAD REGISTER                         00200001
+         L     2,48(0,15)         LOAD REGISTER                         00210003
+         AR    2,1                ADD REGISTER                          00220001
+         ST    2,56(0,15)         STORE RESULTS IN SUM                  00230003
+         L     3,44(0,15)         LOAD NUM1 IN REGISTER THREE           00240003
+         L     4,48(0,15)         LOAD NUM2 IN REGISTER FOUR            00250003
+         SR    4,3                SUBTRACT REGISTERS                    00260001
+         ST    4,52(0,15)         STORE IN DIFF                         00270003
+         XDUMP 52(0,15),4         DUMP DIFF                             00280003
+         XDUMP 56(0,15),4         DUMP SUM                              00290003
+         BR    14                                                       00300001
+NUM1     DC    F'67'              INITIALIZE FULLWORD                   00310001
+NUM2     DC    F'203'             INITIALIZE FULLWORD                   00320001
+DIFF     DS    F                  CREATE FULLWORD                       00330001
+SUM      DS    F                  CREATE FULLWORD                       00340001
+         END   MAIN                                                     00350001

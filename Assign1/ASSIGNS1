@@ -1,0 +1,29 @@
+//KC03E18L JOB ,'Carlton Hunt',MSGCLASS=H                               00010000
+//STEP1 EXEC PGM=ASSIST                                                 00020000
+//STEPLIB DD DSN=KC02293.ASSIST.LOADLIB,DISP=SHR                        00030000
+//SYSPRINT DD SYSOUT=*                                                  00040000
+//SYSIN DD *                                                            00050000
+********************************************                            00060000
+* Assignment 1 - Part A                                                 00070000
+*                                                                       00080000
+* NAME:   Carlton Hunt                                                  00090000
+*                                                                       00100000
+* Register Usage                                                        00110000
+*                                                                       00120000
+*                                                                       00130000
+********************************************                            00140000
+MAIN     CSECT                                                          00150000
+         USING MAIN,15                                                  00160000
+         L     1,NUM1             LOAD REGISTER                         00170000
+         L     2,NUM2             LOAD REGISTER                         00180000
+         AR    1,2                ADD REGISTER ONE AND TWO              00190000
+         L     3,NUM1             LOAD REGISTER                         00200000
+         L     4,NUM2             LOAD REGISTER                         00210000
+         SR    4,3                SUBTRACT REGISTERS                    00220000
+         XDUMP                                                          00230000
+         BR    14                 STOP PROGRAM                          00240000
+NUM1     DS    F'67'              INITIALIZE                            00250000
+NUM2     DS    F'203'             INITIALIZE                            00260000
+         END   MAIN                                                     00270000
+/*                                                                      00280000
+//                                                                      00290000

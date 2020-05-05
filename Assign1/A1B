@@ -1,0 +1,34 @@
+//KC03E18L JOB ,'Carlton Hunt',MSGCLASS=H                               00010000
+//STEP1 EXEC PGM=ASSIST                                                 00020000
+//STEPLIB DD DSN=KC02293.ASSIST.LOADLIB,DISP=SHR                        00030000
+//SYSPRINT DD SYSOUT=*                                                  00040000
+//SYSIN DD *                                                            00050000
+********************************************                            00060000
+* Assignment 1 - Part B                                                 00070000
+*                                                                       00080000
+* NAME:   Carlton Hunt                                                  00090000
+*                                                                       00100000
+* Register Usage                                                        00110000
+*                                                                       00120000
+*                                                                       00130000
+********************************************                            00140000
+MAIN     CSECT                                                          00150000
+         USING MAIN,15                                                  00160000
+         L     1,NUM1             LOAD                                  00170000
+         L     2,NUM2             LOAD                                  00180000
+         AR    2,1                ADD REGISTER                          00190000
+         ST    2,SUM              STORE IN SUM                          00200000
+         L     3,NUM1             LOAD                                  00210000
+         L     4,NUM2             LOAD                                  00220000
+         SR    4,3                SUBTRACT REGISTERS                    00230000
+         ST    4,DIFF             STORE IN DIFF                         00240000
+         XDUMP SUM,4              DUMP SUM                              00250000
+         XDUMP DIFF,4             DUMP DIFF                             00260000
+         BR    14                                                       00270000
+NUM1     DC    F'67'              NUM1 = 67                             00280000
+NUM2     DC    F'203'             NUM2 = 203                            00290000
+DIFF     DS    F                  DIFF                                  00300000
+SUM      DS    F                  SUM                                   00310000
+         END   MAIN                                                     00320000
+/*                                                                      00330000
+//                                                                      00340000
