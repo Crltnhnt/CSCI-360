@@ -1,0 +1,82 @@
+//KC03E18L JOB ,'Carlton Hunt',MSGCLASS=H
+//STEP1   EXEC  PGM=ASSIST,PARM='MACRO=H'
+//STEPLIB    DD  DSN=KC02293.ASSIST.LOADLIB,DISP=SHR
+//SYSPRINT   DD  SYSOUT=*
+//SYSIN      DD  *
+****************************************************************
+*
+*           Assignment 9
+*  Name:    Carlton Hunt
+*
+****************************************************************
+****************************************************************
+*Name: STRLEN
+*
+* Calculate the length of a C-style string using &STR and &LEN
+****************************************************************
+         MACRO                      Start Macro code
+         STRLEN &STR,&LEN           2 params
+         AIF   ('&STR' EQ '').ERROR
+         AIF   ('&LEN' EQ '').ERROR
+*
+         STM   2,3,A&SYSNDX
+         B     B&SYSNDX
+A&SYSNDX DS    3F
+B&SYSNDX LA    2,&STR                Store pointer
+         LA    3,&LEN                Store pointer
+         SR    4,4                   make a counter
+C&SYSNDX DS    0H
+         CLI   0(2),X'00'            check if end
+         BE    D&SYSNDX              end of macro
+         LA    2,1(,2)               advance pointer
+         A     4,=F'1'               increment by 1
+         B     C&SYSNDX
+D&SYSNDX DS    0H
+         ST    4,0(3)
+         LM    2,4,A&SYSNDX
+         MEXIT
+.ERROR   MNOTE 'Missing Argument'
+         MEND                        end macro code
+**************************************************************
+*Name: PROD
+*
+* Find the product of a list of fullwords and store the result
+* using &RESULT and &LIST
+**************************************************************
+         MACRO                        Start of macro code
+         PROD  &RESULT,&LIST          2 params
+         LCLA  &CNT,&LENGTH
+&CNT     SETA  2
+&LENGTH  SETA  N'&LIST
+         AIF   ('&RESULT' EQ '').ERROR
+         AIF   ('&LIST' EQ '').ERROR
+         AIF   ('&LIST' EQ '()').ERROR2
+         STM   2,4,Z&SYSNDX
+         B     Y&SYSNDX
+Z&SYSNDX DS    3F
+Y&SYSNDX DS    0H
+         L     3,&LIST(1)
+*
+.BLOOP   AIF   (&CNT  GT  &LENGTH).DONE
+         L     4,&LIST(&CNT)            load the next full word
+         MR    2,4                      Multiply R2 and R4
+&CNT     SETA  &CNT+1
+         AGO   .BLOOP
+*
+.DONE    ANOP
+         B     X&SYSNDX
+X&SYSNDX DS    0H
+         ST    3,&RESULT                store the largest number
+         LM    2,4,Z&SYSNDX             restore registers
+         MEXIT
+.ERROR   MNOTE 'Missing Argument'
+         MEXIT
+.ERROR2  L     3,=F'1'
+         ST    3,&RESULT
+         MEND
+*
+/*
+//          DD DSN=KC02314.AUTUMN19.CSCI360.HW9.DRIVER,DISP=SHR
+//FT05F001  DD DUMMY
+//FT06F001  DD SYSOUT=*
+//
