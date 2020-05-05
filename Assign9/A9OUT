@@ -1,0 +1,696 @@
+1                   J E S 2  J O B  L O G  --  S Y S T E M  2 9 6 4  --  N O D E  S V S C J E S 2        
+0 
+ 19.00.40 JOB03987 ---- TUESDAY,   03 DEC 2019 ----
+ 19.00.40 JOB03987  IRR010I  USERID KC03E18  IS ASSIGNED TO THIS JOB.
+ 19.00.40 JOB03987  ICH70001I KC03E18  LAST ACCESS AT 18:59:21 ON TUESDAY, DECEMBER 3, 2019
+ 19.00.40 JOB03987  $HASP373 KC03E18L STARTED - INIT 3    - CLASS A        - SYS 2964
+ 19.00.40 JOB03987  -                                      -----TIMINGS (MINS.)------                          -----PAGING COUNTS-
+ 19.00.40 JOB03987  -STEPNAME PROCSTEP    RC   EXCP   CONN       TCB       SRB  CLOCK          SERV  WORKLOAD  PAGE  SWAP   VIO SW
+ 19.00.40 JOB03987  -STEP1                00    308     14       .00       .00     .0            26  BATCH        0     0     0   
+ 19.00.40 JOB03987  -KC03E18L ENDED.  NAME-Carlton Hunt         TOTAL TCB CPU TIME=      .00 TOTAL ELAPSED TIME=    .0
+ 19.00.40 JOB03987  $HASP395 KC03E18L ENDED - RC=0000
+0------ JES2 JOB STATISTICS ------
+-  03 DEC 2019 JOB EXECUTION DATE
+-           81 CARDS READ
+-          700 SYSOUT PRINT RECORDS
+-            0 SYSOUT PUNCH RECORDS
+-           55 SYSOUT SPOOL KBYTES
+-         0.00 MINUTES EXECUTION TIME
+         1 //KC03E18L JOB ,'Carlton Hunt',MSGCLASS=H                               JOB03987
+         2 //STEP1   EXEC  PGM=ASSIST,PARM='MACRO=H'                                       
+         3 //STEPLIB    DD  DSN=KC02293.ASSIST.LOADLIB,DISP=SHR                            
+         4 //SYSPRINT   DD  SYSOUT=*                                                       
+         5 //SYSIN      DD  *                                                              
+         6 //          DD DSN=KC02314.AUTUMN19.CSCI360.HW9.DRIVER,DISP=SHR                 
+         7 //FT05F001  DD DUMMY                                                            
+         8 //FT06F001  DD SYSOUT=*                                                         
+ ICH70001I KC03E18  LAST ACCESS AT 18:59:21 ON TUESDAY, DECEMBER 3, 2019
+ IEFA111I KC03E18L IS USING THE FOLLOWING JOB RELATED SETTINGS:
+          SWA=ABOVE,TIOT SIZE=32K,DSENQSHR=DISALLOW,GDGBIAS=JOB
+ IEF236I ALLOC. FOR KC03E18L STEP1
+ IGD103I SMS ALLOCATED TO DDNAME STEPLIB
+ IEF237I JES2 ALLOCATED TO SYSPRINT
+ IEF237I JES2 ALLOCATED TO SYSIN
+ IGD103I SMS ALLOCATED TO DDNAME
+ IEF237I DMY  ALLOCATED TO FT05F001
+ IEF237I JES2 ALLOCATED TO FT06F001
+ IEF142I KC03E18L STEP1 - STEP WAS EXECUTED - COND CODE 0000
+ IGD104I KC02293.ASSIST.LOADLIB                       RETAINED,  DDNAME=STEPLIB 
+ IEF285I   KC03E18.KC03E18L.JOB03987.D0000102.?         SYSOUT        
+ IEF285I   KC03E18.KC03E18L.JOB03987.D0000101.?         SYSIN         
+ IGD104I KC02314.AUTUMN19.CSCI360.HW9.DRIVER          RETAINED,  DDNAME=        
+ IEF285I   KC03E18.KC03E18L.JOB03987.D0000103.?         SYSOUT        
+ IEF373I STEP/STEP1   /START 2019337.1900
+ IEF032I STEP/STEP1   /STOP  2019337.1900 
+         CPU:     0 HR  00 MIN  00.00 SEC    SRB:     0 HR  00 MIN  00.00 SEC    
+         VIRT:   584K  SYS:   244K  EXT:        0K  SYS:    11360K
+         ATB- REAL:                  1044K  SLOTS:                     0K
+              VIRT- ALLOC:      11M SHRD:       0M
+ IEF375I  JOB/KC03E18L/START 2019337.1900
+ IEF033I  JOB/KC03E18L/STOP  2019337.1900 
+         CPU:     0 HR  00 MIN  00.00 SEC    SRB:     0 HR  00 MIN  00.00 SEC    
+1*** ASSIST 4.0/A2-05/15/82  470/V7A/0:OS/VS2  INS=SDFP7/X=BGHO, CHECK/TRC/=1180, OPTS=CDKMPR FROM PENN ST*NIU COMPSCI*LT         
+0MACRO=H                                                                                                                          
+0                                                                                                               PAGE    1         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+                                       1 ****************************************************************                         
+                                       2 *                                                                                        
+                                       3 *           Assignment 9                                                                 
+                                       4 *  Name:    Carlton Hunt                                                                 
+                                       5 *                                                                                        
+                                       6 ****************************************************************                         
+                                       7 ****************************************************************                         
+                                       8 *Name: STRLEN                                                                            
+                                       9 *                                                                                        
+                                      10 * Calculate the length of a C-style string using &STR and &LEN                           
+                                      11 ****************************************************************                         
+                                      12          MACRO                      Start Macro code                                     
+                                      13          STRLEN &STR,&LEN           2 params                                             
+                                      14          AIF   ('&STR' EQ '').ERROR                                                      
+                                      15          AIF   ('&LEN' EQ '').ERROR                                                      
+                                      16 *                                                                                        
+                                      17          STM   2,3,A&SYSNDX                                                              
+                                      18          B     B&SYSNDX                                                                  
+                                      19 A&SYSNDX DS    3F                                                                        
+                                      20 B&SYSNDX LA    2,&STR                Store pointer                                       
+                                      21          LA    3,&LEN                Store pointer                                       
+                                      22          SR    4,4                   make a counter                                      
+                                      23 C&SYSNDX DS    0H                                                                        
+                                      24          CLI   0(2),X'00'            check if end                                        
+                                      25          BE    D&SYSNDX              end of macro                                        
+                                      26          LA    2,1(,2)               advance pointer                                     
+                                      27          A     4,=F'1'               increment by 1                                      
+                                      28          B     C&SYSNDX                                                                  
+                                      29 D&SYSNDX DS    0H                                                                        
+                                      30          ST    4,0(3)                                                                    
+                                      31          LM    2,4,A&SYSNDX                                                              
+                                      32          MEXIT                                                                           
+                                      33 .ERROR   MNOTE 'Missing Argument'                                                        
+                                      34          MEND                        end macro code                                      
+                                      35 **************************************************************                           
+                                      36 *Name: PROD                                                                              
+                                      37 *                                                                                        
+                                      38 * Find the product of a list of fullwords and store the result                           
+                                      39 * using &RESULT and &LIST                                                                
+                                      40 **************************************************************                           
+                                      41          MACRO                        Start of macro code                                
+                                      42          PROD  &RESULT,&LIST          2 params                                           
+                                      43          LCLA  &CNT,&LENGTH                                                              
+                                      44 &CNT     SETA  2                                                                         
+                                      45 &LENGTH  SETA  N'&LIST                                                                   
+                                      46          AIF   ('&RESULT' EQ '').ERROR                                                   
+                                      47          AIF   ('&LIST' EQ '').ERROR                                                     
+                                      48          AIF   ('&LIST' EQ '()').ERROR2                                                  
+                                      49          STM   2,4,Z&SYSNDX                                                              
+                                      50          B     Y&SYSNDX                                                                  
+                                      51 Z&SYSNDX DS    3F                                                                        
+                                      52 Y&SYSNDX DS    0H                                                                        
+1                                                                                                               PAGE    2         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+                                      53          L     3,&LIST(1)                                                                
+                                      54 *                                                                                        
+                                      55 .BLOOP   AIF   (&CNT  GT  &LENGTH).DONE                                                  
+                                      56          L     4,&LIST(&CNT)            load the next full word                          
+                                      57          MR    2,4                      Multiply R2 and R4                               
+                                      58 &CNT     SETA  &CNT+1                                                                    
+                                      59          AGO   .BLOOP                                                                    
+                                      60 *                                                                                        
+                                      61 .DONE    ANOP                                                                            
+                                      62          B     X&SYSNDX                                                                  
+                                      63 X&SYSNDX DS    0H                                                                        
+                                      64          ST    3,&RESULT                store the largest number                         
+                                      65          LM    2,4,Z&SYSNDX             restore registers                                
+                                      66          MEXIT                                                                           
+                                      67 .ERROR   MNOTE 'Missing Argument'                                                        
+                                      68          MEXIT                                                                           
+                                      69 .ERROR2  L     3,=F'1'                                                                   
+                                      70          ST    3,&RESULT                                                                 
+                                      71          MEND                                                                            
+                                      72 *                                                                                        
+                                      73 **********************************************************************                   
+                                      74 *                                                                    *                   
+                                      75 *            Name:  DRIVER.                                          *                   
+                                      76 *                                                                    *                   
+                                      77 *        Function:  Test platform for macros.                        *                   
+                                      78 *                                                                    *                   
+                                      79 *           Input:  None.                                            *                   
+                                      80 *                                                                    *                   
+                                      81 *          Output:  Results of the tests.                            *                   
+                                      82 *                                                                    *                   
+                                      83 *     Entry Conds:  14 -- Return address to the operating            *                   
+                                      84 *                         system.                                    *                   
+                                      85 *                   15 -- Address of entry to the program.           *                   
+                                      86 *                                                                    *                   
+                                      87 *  Register Usage:   2 -- Used in addresses in macro tests.          *                   
+                                      88 *                   11 -- Second base register.                      *                   
+                                      89 *                   12 -- Base register.                             *                   
+                                      90 *                                                                    *                   
+                                      91 *      Exit Conds:  14 -- Return address to the operating            *                   
+                                      92 *                         system.                                    *                   
+                                      93 *                                                                    *                   
+                                      94 **********************************************************************                   
+1                                                                                                               PAGE    3         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+                                                                                                                                  
+                                                                                                                                  
+                                      96 **********************************************************************                   
+                                      97 *               The DRIVER program begins here.                      *                   
+                                      98 **********************************************************************                   
+                                      99 *                                                                                        
+ 000000                              100 DRIVER   CSECT                         Beginning of the program                          
+                                     101 *                                                                                        
+                                     103 *                                                                                        
+                                     104 *  Standard entry linkage.                                                               
+                                     105 *                                                                                        
+ 000000 90EC D00C            0000C   106          STM   14,12,12(13)            Store the registers in the save                   
+                                     107 *                                      area of the calling routine                       
+                                     108 *                                                                                        
+ 000004 18CF                         109          LR    12,15                   Point register 12 at DRIVER                       
+ 000000                              110          USING DRIVER,12               The base register is 12                           
+                                     111 *                                                                                        
+ 000006 41E0 C68C            0068C   112          LA    14,DRIVSAV              Point register 14 at DRIVER's                     
+                                     113 *                                      save area                                         
+ 00000A 50DE 0004            00004   114          ST    13,4(14)                Store the backward pointer                        
+ 00000E 50ED 0008            00008   115          ST    14,8(13)                Store the forward pointer                         
+ 000012 18DE                         116          LR    13,14                   Point register 13 at DRIVER's                     
+                                     117 *                                      save area                                         
+                                     118 *                                                                                        
+ 000014 E020 C550 001A 00550         119          XPRNT =CL26'1Results of testing Macros',26                                      
+                                     120 *                                      Print the title                                   
+                                     121 *                                                                                        
+                                     122 * This block of code tests the STRLEN macro.                                             
+                                     123 *                                                                                        
+ 00001A E020 C5D4 0001 005D4         124          XPRNT =C'0',1                 Skip an extra 2 lines                             
+ 000020 E020 C56A 001E 0056A         125          XPRNT =CL30'-Now we test the STRLEN macro.',30                                  
+                                     126 *                                      Print a heading                                   
+                                     127 *                                                                                        
+                                     128 * These first three calls to STRLEN all have problems which should                       
+                                     129 * result in MNOTEs.                                                                      
+                                     130 *                                                                                        
+                                     131          STRLEN   S1                                                                     
+ ----->AS***MNOTE***    1,Missing Argument                                                                        <-ERROR         
+                                     133 *                                                                                        
+                                     134          STRLEN   ,LENGTH                                                                
+ ----->AS***MNOTE***    1,Missing Argument                                                                        <-ERROR         
+                                     136 *                                                                                        
+                                     137          STRLEN                                                                          
+ ----->AS***MNOTE***    1,Missing Argument                                                                        <-ERROR         
+                                     139 *                                                                                        
+                                     140 * The next few calls to STRLEN should all work.                                          
+                                     141 *                                                                                        
+ 000026 E020 C5D5 001B 005D5         142          XPRNT =CL27'0The actual length is:    0',27                                     
+                                     143          STRLEN   S1,LENGTH                                                              
+                                     144+*                                                                                        
+ 00002C 9023 C034            00034   145+         STM   2,3,A0004                                                                 
+ 000030 47F0 C040            00040   146+         B     B0004                                                                     
+ 000034                              147+A0004    DS    3F                                                                        
+ 000040 4120 C6D4            006D4   148+B0004    LA    2,S1                  Store pointer                                       
+ 000044 4130 C6DC            006DC   149+         LA    3,LENGTH              Store pointer                                       
+ 000048 1B44                         150+         SR    4,4                   make a counter                                      
+ 00004A                              151+C0004    DS    0H                                                                        
+1                                                                                                               PAGE    4         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+ 00004A 9500 2000      00000         152+         CLI   0(2),X'00'            check if end                                        
+ 00004E 4780 C05E            0005E   153+         BE    D0004                 end of macro                                        
+ 000052 4120 2001            00001   154+         LA    2,1(,2)               advance pointer                                     
+ 000056 5A40 C4F8            004F8   155+         A     4,=F'1'               increment by 1                                      
+ 00005A 47F0 C04A            0004A   156+         B     C0004                                                                     
+ 00005E                              157+D0004    DS    0H                                                                        
+ 00005E 5043 0000            00000   158+         ST    4,0(3)                                                                    
+ 000062 9824 C034            00034   159+         LM    2,4,A0004                                                                 
+ 000066 5840 C6DC            006DC   160          L     4,LENGTH                                                                  
+ 00006A 4E40 C700            00700   161          CVD   4,TEMP                                                                    
+ 00006E D203 C6F7 C4FC 006F7 004FC   162          MVC   SVALUE(4),=XL4'40202120'                                                  
+ 000074 DE03 C6F7 C706 006F7 00706   163          ED    SVALUE(4),TEMP+6                                                          
+ 00007A E020 C6E0 001B 006E0         164          XPRNT SLINE,27                                                                  
+                                     165 *                                                                                        
+ 000080 E020 C5F0 001B 005F0         166          XPRNT =CL27'0The actual length is:    3',27                                     
+                                     167          STRLEN   S2,LENGTH                                                              
+                                     168+*                                                                                        
+ 000086 9023 C090            00090   169+         STM   2,3,A0005                                                                 
+ 00008A 47F0 C09C            0009C   170+         B     B0005                                                                     
+ 000090                              171+A0005    DS    3F                                                                        
+ 00009C 4120 C6D5            006D5   172+B0005    LA    2,S2                  Store pointer                                       
+ 0000A0 4130 C6DC            006DC   173+         LA    3,LENGTH              Store pointer                                       
+ 0000A4 1B44                         174+         SR    4,4                   make a counter                                      
+ 0000A6                              175+C0005    DS    0H                                                                        
+ 0000A6 9500 2000      00000         176+         CLI   0(2),X'00'            check if end                                        
+ 0000AA 4780 C0BA            000BA   177+         BE    D0005                 end of macro                                        
+ 0000AE 4120 2001            00001   178+         LA    2,1(,2)               advance pointer                                     
+ 0000B2 5A40 C4F8            004F8   179+         A     4,=F'1'               increment by 1                                      
+ 0000B6 47F0 C0A6            000A6   180+         B     C0005                                                                     
+ 0000BA                              181+D0005    DS    0H                                                                        
+ 0000BA 5043 0000            00000   182+         ST    4,0(3)                                                                    
+ 0000BE 9824 C090            00090   183+         LM    2,4,A0005                                                                 
+ 0000C2 5840 C6DC            006DC   184          L     4,LENGTH                                                                  
+ 0000C6 4E40 C700            00700   185          CVD   4,TEMP                                                                    
+ 0000CA D203 C6F7 C4FC 006F7 004FC   186          MVC   SVALUE(4),=XL4'40202120'                                                  
+ 0000D0 DE03 C6F7 C706 006F7 00706   187          ED    SVALUE(4),TEMP+6                                                          
+ 0000D6 E020 C6E0 001B 006E0         188          XPRNT SLINE,27                                                                  
+                                     189 *                                                                                        
+ 0000DC E020 C5D5 001B 005D5         190          XPRNT =CL27'0The actual length is:    0',27                                     
+                                     191          STRLEN   S3,LENGTH                                                              
+                                     192+*                                                                                        
+ 0000E2 9023 C0EC            000EC   193+         STM   2,3,A0006                                                                 
+ 0000E6 47F0 C0F8            000F8   194+         B     B0006                                                                     
+ 0000EC                              195+A0006    DS    3F                                                                        
+ 0000F8 4120 C6D9            006D9   196+B0006    LA    2,S3                  Store pointer                                       
+ 0000FC 4130 C6DC            006DC   197+         LA    3,LENGTH              Store pointer                                       
+ 000100 1B44                         198+         SR    4,4                   make a counter                                      
+ 000102                              199+C0006    DS    0H                                                                        
+ 000102 9500 2000      00000         200+         CLI   0(2),X'00'            check if end                                        
+ 000106 4780 C116            00116   201+         BE    D0006                 end of macro                                        
+ 00010A 4120 2001            00001   202+         LA    2,1(,2)               advance pointer                                     
+ 00010E 5A40 C4F8            004F8   203+         A     4,=F'1'               increment by 1                                      
+ 000112 47F0 C102            00102   204+         B     C0006                                                                     
+ 000116                              205+D0006    DS    0H                                                                        
+ 000116 5043 0000            00000   206+         ST    4,0(3)                                                                    
+ 00011A 9824 C0EC            000EC   207+         LM    2,4,A0006                                                                 
+ 00011E 5840 C6DC            006DC   208          L     4,LENGTH                                                                  
+1                                                                                                               PAGE    5         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+ 000122 4E40 C700            00700   209          CVD   4,TEMP                                                                    
+ 000126 D203 C6F7 C4FC 006F7 004FC   210          MVC   SVALUE(4),=XL4'40202120'                                                  
+ 00012C DE03 C6F7 C706 006F7 00706   211          ED    SVALUE(4),TEMP+6                                                          
+ 000132 E020 C6E0 001B 006E0         212          XPRNT SLINE,27                                                                  
+                                     213 *                                                                                        
+ 000138 E020 C5F0 001B 005F0         214          XPRNT =CL27'0The actual length is:    3',27                                     
+ 00013E 4130 C6D5            006D5   215          LA    3,S2                                                                      
+                                     216          STRLEN   0(3),LENGTH                                                            
+                                     217+*                                                                                        
+ 000142 9023 C14C            0014C   218+         STM   2,3,A0007                                                                 
+ 000146 47F0 C158            00158   219+         B     B0007                                                                     
+ 00014C                              220+A0007    DS    3F                                                                        
+ 000158 4123 0000            00000   221+B0007    LA    2,0(3)                Store pointer                                       
+ 00015C 4130 C6DC            006DC   222+         LA    3,LENGTH              Store pointer                                       
+ 000160 1B44                         223+         SR    4,4                   make a counter                                      
+ 000162                              224+C0007    DS    0H                                                                        
+ 000162 9500 2000      00000         225+         CLI   0(2),X'00'            check if end                                        
+ 000166 4780 C176            00176   226+         BE    D0007                 end of macro                                        
+ 00016A 4120 2001            00001   227+         LA    2,1(,2)               advance pointer                                     
+ 00016E 5A40 C4F8            004F8   228+         A     4,=F'1'               increment by 1                                      
+ 000172 47F0 C162            00162   229+         B     C0007                                                                     
+ 000176                              230+D0007    DS    0H                                                                        
+ 000176 5043 0000            00000   231+         ST    4,0(3)                                                                    
+ 00017A 9824 C14C            0014C   232+         LM    2,4,A0007                                                                 
+ 00017E 5840 C6DC            006DC   233          L     4,LENGTH                                                                  
+ 000182 4E40 C700            00700   234          CVD   4,TEMP                                                                    
+ 000186 D203 C6F7 C4FC 006F7 004FC   235          MVC   SVALUE(4),=XL4'40202120'                                                  
+ 00018C DE03 C6F7 C706 006F7 00706   236          ED    SVALUE(4),TEMP+6                                                          
+ 000192 E020 C6E0 001B 006E0         237          XPRNT SLINE,27                                                                  
+                                     238 *                                                                                        
+ 000198 E020 C5F0 001B 005F0         239          XPRNT =CL27'0The actual length is:    3',27                                     
+ 00019E 4150 C6DC            006DC   240          LA    5,LENGTH                                                                  
+                                     241          STRLEN   S2,0(5)                                                                
+                                     242+*                                                                                        
+ 0001A2 9023 C1AC            001AC   243+         STM   2,3,A0008                                                                 
+ 0001A6 47F0 C1B8            001B8   244+         B     B0008                                                                     
+ 0001AC                              245+A0008    DS    3F                                                                        
+ 0001B8 4120 C6D5            006D5   246+B0008    LA    2,S2                  Store pointer                                       
+ 0001BC 4135 0000            00000   247+         LA    3,0(5)                Store pointer                                       
+ 0001C0 1B44                         248+         SR    4,4                   make a counter                                      
+ 0001C2                              249+C0008    DS    0H                                                                        
+ 0001C2 9500 2000      00000         250+         CLI   0(2),X'00'            check if end                                        
+ 0001C6 4780 C1D6            001D6   251+         BE    D0008                 end of macro                                        
+ 0001CA 4120 2001            00001   252+         LA    2,1(,2)               advance pointer                                     
+ 0001CE 5A40 C4F8            004F8   253+         A     4,=F'1'               increment by 1                                      
+ 0001D2 47F0 C1C2            001C2   254+         B     C0008                                                                     
+ 0001D6                              255+D0008    DS    0H                                                                        
+ 0001D6 5043 0000            00000   256+         ST    4,0(3)                                                                    
+ 0001DA 9824 C1AC            001AC   257+         LM    2,4,A0008                                                                 
+ 0001DE 5840 C6DC            006DC   258          L     4,LENGTH                                                                  
+ 0001E2 4E40 C700            00700   259          CVD   4,TEMP                                                                    
+ 0001E6 D203 C6F7 C4FC 006F7 004FC   260          MVC   SVALUE(4),=XL4'40202120'                                                  
+ 0001EC DE03 C6F7 C706 006F7 00706   261          ED    SVALUE(4),TEMP+6                                                          
+ 0001F2 E020 C6E0 001B 006E0         262          XPRNT SLINE,27                                                                  
+                                     263 *                                                                                        
+ 0001F8 E020 C5F0 001B 005F0         264          XPRNT =CL27'0The actual length is:    3',27                                     
+ 0001FE 4130 C6D5            006D5   265          LA    3,S2                                                                      
+1                                                                                                               PAGE    6         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+ 000202 4150 C6DC            006DC   266          LA    5,LENGTH                                                                  
+                                     267          STRLEN   0(3),0(5)                                                              
+                                     268+*                                                                                        
+ 000206 9023 C210            00210   269+         STM   2,3,A0009                                                                 
+ 00020A 47F0 C21C            0021C   270+         B     B0009                                                                     
+ 000210                              271+A0009    DS    3F                                                                        
+ 00021C 4123 0000            00000   272+B0009    LA    2,0(3)                Store pointer                                       
+ 000220 4135 0000            00000   273+         LA    3,0(5)                Store pointer                                       
+ 000224 1B44                         274+         SR    4,4                   make a counter                                      
+ 000226                              275+C0009    DS    0H                                                                        
+ 000226 9500 2000      00000         276+         CLI   0(2),X'00'            check if end                                        
+ 00022A 4780 C23A            0023A   277+         BE    D0009                 end of macro                                        
+ 00022E 4120 2001            00001   278+         LA    2,1(,2)               advance pointer                                     
+ 000232 5A40 C4F8            004F8   279+         A     4,=F'1'               increment by 1                                      
+ 000236 47F0 C226            00226   280+         B     C0009                                                                     
+ 00023A                              281+D0009    DS    0H                                                                        
+ 00023A 5043 0000            00000   282+         ST    4,0(3)                                                                    
+ 00023E 9824 C210            00210   283+         LM    2,4,A0009                                                                 
+ 000242 5840 C6DC            006DC   284          L     4,LENGTH                                                                  
+ 000246 4E40 C700            00700   285          CVD   4,TEMP                                                                    
+ 00024A D203 C6F7 C4FC 006F7 004FC   286          MVC   SVALUE(4),=XL4'40202120'                                                  
+ 000250 DE03 C6F7 C706 006F7 00706   287          ED    SVALUE(4),TEMP+6                                                          
+ 000256 E020 C6E0 001B 006E0         288          XPRNT SLINE,27                                                                  
+                                     289 *                                                                                        
+                                     290 * This block of code deals with the PROD macro.                                          
+                                     291 *                                                                                        
+ 00025C E020 C5D4 0001 005D4         292          XPRNT =C'0',1                 Skip an extra 2 lines.                            
+ 000262 E020 C500 001C 00500         293          XPRNT =CL28'-Now we test the PROD macro.',28                                    
+                                     294 *                                      Print a heading.                                  
+                                     295 *                                                                                        
+                                     296 * These first three calls to PROD have problems which should                             
+                                     297 * result in MNOTEs.                                                                      
+                                     298 *                                                                                        
+                                     299          PROD   RESULT                                                                   
+ ----->AS***MNOTE***    1,Missing Argument                                                                        <-ERROR         
+                                     301 *                                                                                        
+                                     302          PROD  ,(ABC,GHI)                                                                
+ ----->AS***MNOTE***    1,Missing Argument                                                                        <-ERROR         
+                                     304 *                                                                                        
+                                     305          PROD                                                                            
+ ----->AS***MNOTE***    1,Missing Argument                                                                        <-ERROR         
+                                     307 *                                                                                        
+                                     308 * The next group of calls should all work.                                               
+                                     309 *                                                                                        
+ 000268 4110 C718            00718   310          LA    1,PLIST                                                                   
+                                     311 *                                                                                        
+                                     312          PROD  RESULT,(ABC)                                                              
+ 00026C 9024 C274            00274   313+         STM   2,4,Z0013                                                                 
+ 000270 47F0 C280            00280   314+         B     Y0013                                                                     
+ 000274                              315+Z0013    DS    3F                                                                        
+ 000280                              316+Y0013    DS    0H                                                                        
+ 000280 5830 C70C            0070C   317+         L     3,ABC                                                                     
+                                     318+*                                                                                        
+ 000284 47F0 C288            00288   319+         B     X0013                                                                     
+ 000288                              320+X0013    DS    0H                                                                        
+ 000288 5030 C708            00708   321+         ST    3,RESULT                 store the largest number                         
+ 00028C 9824 C274            00274   322+         LM    2,4,Z0013                restore registers                                
+1                                                                                                               PAGE    7         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+ 000290 45B0 C736            00736   323          BAL   11,POUT                                                                   
+ 000294 E020 C60B 0019 0060B         324          XPRNT =CL25'0Finding the product of 8',25                                       
+ 00029A E020 C720 0015 00720         325          XPRNT PLINE,21                                                                  
+                                     326 *                                                                                        
+                                     327          PROD  RESULT,(ABC,GHI)                                                          
+ 0002A0 9024 C2A8            002A8   328+         STM   2,4,Z0014                                                                 
+ 0002A4 47F0 C2B4            002B4   329+         B     Y0014                                                                     
+ 0002A8                              330+Z0014    DS    3F                                                                        
+ 0002B4                              331+Y0014    DS    0H                                                                        
+ 0002B4 5830 C70C            0070C   332+         L     3,ABC                                                                     
+                                     333+*                                                                                        
+ 0002B8 5840 C714            00714   334+         L     4,GHI                    load the next full word                          
+ 0002BC 1C24                         335+         MR    2,4                      Multiply R2 and R4                               
+ 0002BE 47F0 C2C2            002C2   336+         B     X0014                                                                     
+ 0002C2                              337+X0014    DS    0H                                                                        
+ 0002C2 5030 C708            00708   338+         ST    3,RESULT                 store the largest number                         
+ 0002C6 9824 C2A8            002A8   339+         LM    2,4,Z0014                restore registers                                
+ 0002CA 45B0 C736            00736   340          BAL   11,POUT                                                                   
+ 0002CE E020 C624 0021 00624         341          XPRNT =CL33'0Finding the product of 8 and -10',33                               
+ 0002D4 E020 C720 0015 00720         342          XPRNT PLINE,21                                                                  
+                                     343 *                                                                                        
+                                     344          PROD  RESULT,(ABC,DEF,GHI)                                                      
+ 0002DA 9024 C2E4            002E4   345+         STM   2,4,Z0015                                                                 
+ 0002DE 47F0 C2F0            002F0   346+         B     Y0015                                                                     
+ 0002E4                              347+Z0015    DS    3F                                                                        
+ 0002F0                              348+Y0015    DS    0H                                                                        
+ 0002F0 5830 C70C            0070C   349+         L     3,ABC                                                                     
+                                     350+*                                                                                        
+ 0002F4 5840 C710            00710   351+         L     4,DEF                    load the next full word                          
+ 0002F8 1C24                         352+         MR    2,4                      Multiply R2 and R4                               
+ 0002FA 5840 C714            00714   353+         L     4,GHI                    load the next full word                          
+ 0002FE 1C24                         354+         MR    2,4                      Multiply R2 and R4                               
+ 000300 47F0 C304            00304   355+         B     X0015                                                                     
+ 000304                              356+X0015    DS    0H                                                                        
+ 000304 5030 C708            00708   357+         ST    3,RESULT                 store the largest number                         
+ 000308 9824 C2E4            002E4   358+         LM    2,4,Z0015                restore registers                                
+ 00030C 45B0 C736            00736   359          BAL   11,POUT                                                                   
+ 000310 E020 C645 0025 00645         360          XPRNT =CL37'0Finding the product of 8, 35 and -10',37                           
+ 000316 E020 C720 0015 00720         361          XPRNT PLINE,21                                                                  
+                                     362 *                                                                                        
+                                     363          PROD  RESULT,(ABC,ABC,ABC)                                                      
+ 00031C 9024 C324            00324   364+         STM   2,4,Z0016                                                                 
+ 000320 47F0 C330            00330   365+         B     Y0016                                                                     
+ 000324                              366+Z0016    DS    3F                                                                        
+ 000330                              367+Y0016    DS    0H                                                                        
+ 000330 5830 C70C            0070C   368+         L     3,ABC                                                                     
+                                     369+*                                                                                        
+ 000334 5840 C70C            0070C   370+         L     4,ABC                    load the next full word                          
+ 000338 1C24                         371+         MR    2,4                      Multiply R2 and R4                               
+ 00033A 5840 C70C            0070C   372+         L     4,ABC                    load the next full word                          
+ 00033E 1C24                         373+         MR    2,4                      Multiply R2 and R4                               
+ 000340 47F0 C344            00344   374+         B     X0016                                                                     
+ 000344                              375+X0016    DS    0H                                                                        
+ 000344 5030 C708            00708   376+         ST    3,RESULT                 store the largest number                         
+ 000348 9824 C324            00324   377+         LM    2,4,Z0016                restore registers                                
+ 00034C 45B0 C736            00736   378          BAL   11,POUT                                                                   
+ 000350 E020 C588 0022 00588         379          XPRNT =CL34'0Finding the product of 8, 8 and 8',34                              
+1                                                                                                               PAGE    8         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+ 000356 E020 C720 0015 00720         380          XPRNT PLINE,21                                                                  
+                                     381 *                                                                                        
+                                     382          PROD  RESULT,()                                                                 
+ 00035C 5830 C4F8            004F8   383+         L     3,=F'1'                                                                   
+ 000360 5030 C708            00708   384+         ST    3,RESULT                                                                  
+ 000364 45B0 C736            00736   385          BAL   11,POUT                                                                   
+ 000368 E020 C51C 0024 0051C         386          XPRNT =CL36'0Finding the product of an empty set',36                            
+ 00036E E020 C720 0015 00720         387          XPRNT PLINE,21                                                                  
+                                     388 *                                                                                        
+                                     389          PROD  RESULT,(ABC,ABC+4,ABC+8)                                                  
+ 000374 9024 C37C            0037C   390+         STM   2,4,Z0018                                                                 
+ 000378 47F0 C388            00388   391+         B     Y0018                                                                     
+ 00037C                              392+Z0018    DS    3F                                                                        
+ 000388                              393+Y0018    DS    0H                                                                        
+ 000388 5830 C70C            0070C   394+         L     3,ABC                                                                     
+                                     395+*                                                                                        
+ 00038C 5840 C710            00710   396+         L     4,ABC+4                  load the next full word                          
+ 000390 1C24                         397+         MR    2,4                      Multiply R2 and R4                               
+ 000392 5840 C714            00714   398+         L     4,ABC+8                  load the next full word                          
+ 000396 1C24                         399+         MR    2,4                      Multiply R2 and R4                               
+ 000398 47F0 C39C            0039C   400+         B     X0018                                                                     
+ 00039C                              401+X0018    DS    0H                                                                        
+ 00039C 5030 C708            00708   402+         ST    3,RESULT                 store the largest number                         
+ 0003A0 9824 C37C            0037C   403+         LM    2,4,Z0018                restore registers                                
+ 0003A4 45B0 C736            00736   404          BAL   11,POUT                                                                   
+ 0003A8 E020 C645 0025 00645         405          XPRNT =CL37'0Finding the product of 8, 35 and -10',37                           
+ 0003AE E020 C720 0015 00720         406          XPRNT PLINE,21                                                                  
+                                     407 *                                                                                        
+ 0003B4 4180 C70C            0070C   408          LA    8,ABC                                                                     
+ 0003B8 4190 C710            00710   409          LA    9,DEF                                                                     
+                                     410          PROD  RESULT,(0(8),0(9))                                                        
+ 0003BC 9024 C3C4            003C4   411+         STM   2,4,Z0019                                                                 
+ 0003C0 47F0 C3D0            003D0   412+         B     Y0019                                                                     
+ 0003C4                              413+Z0019    DS    3F                                                                        
+ 0003D0                              414+Y0019    DS    0H                                                                        
+ 0003D0 5838 0000            00000   415+         L     3,0(8)                                                                    
+                                     416+*                                                                                        
+ 0003D4 5849 0000            00000   417+         L     4,0(9)                   load the next full word                          
+ 0003D8 1C24                         418+         MR    2,4                      Multiply R2 and R4                               
+ 0003DA 47F0 C3DE            003DE   419+         B     X0019                                                                     
+ 0003DE                              420+X0019    DS    0H                                                                        
+ 0003DE 5030 C708            00708   421+         ST    3,RESULT                 store the largest number                         
+ 0003E2 9824 C3C4            003C4   422+         LM    2,4,Z0019                restore registers                                
+ 0003E6 45B0 C736            00736   423          BAL   11,POUT                                                                   
+ 0003EA E020 C4D8 0020 004D8         424          XPRNT =CL32'0Finding the product of 8 and 35',32                                
+ 0003F0 E020 C720 0015 00720         425          XPRNT PLINE,21                                                                  
+                                     426 *                                                                                        
+ 0003F6 4180 C70C            0070C   427          LA    8,ABC                                                                     
+                                     428          PROD  RESULT,(0(8),=F'12',GHI,=F'-17')                                          
+ 0003FA 9024 C404            00404   429+         STM   2,4,Z0020                                                                 
+ 0003FE 47F0 C410            00410   430+         B     Y0020                                                                     
+ 000404                              431+Z0020    DS    3F                                                                        
+ 000410                              432+Y0020    DS    0H                                                                        
+ 000410 5838 0000            00000   433+         L     3,0(8)                                                                    
+                                     434+*                                                                                        
+ 000414 5840 C540            00540   435+         L     4,=F'12'                 load the next full word                          
+ 000418 1C24                         436+         MR    2,4                      Multiply R2 and R4                               
+1                                                                                                               PAGE    9         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+ 00041A 5840 C714            00714   437+         L     4,GHI                    load the next full word                          
+ 00041E 1C24                         438+         MR    2,4                      Multiply R2 and R4                               
+ 000420 5840 C544            00544   439+         L     4,=F'-17'                load the next full word                          
+ 000424 1C24                         440+         MR    2,4                      Multiply R2 and R4                               
+ 000426 47F0 C42A            0042A   441+         B     X0020                                                                     
+ 00042A                              442+X0020    DS    0H                                                                        
+ 00042A 5030 C708            00708   443+         ST    3,RESULT                 store the largest number                         
+ 00042E 9824 C404            00404   444+         LM    2,4,Z0020                restore registers                                
+ 000432 45B0 C736            00736   445          BAL   11,POUT                                                                   
+ 000436 E020 C5AA 002A 005AA         446          XPRNT =CL42'0Finding the product of 8, 12, -10 and -17',42                      
+ 00043C E020 C720 0015 00720         447          XPRNT PLINE,21                                                                  
+                                     448 *                                                                                        
+ 000442 4180 C70C            0070C   449          LA    8,ABC                                                                     
+ 000446 4190 C710            00710   450          LA    9,DEF                                                                     
+ 00044A 41A0 C708            00708   451          LA    10,RESULT                                                                 
+                                     452          PROD  0(10),(0(8),0(9))                                                         
+ 00044E 9024 C458            00458   453+         STM   2,4,Z0021                                                                 
+ 000452 47F0 C464            00464   454+         B     Y0021                                                                     
+ 000458                              455+Z0021    DS    3F                                                                        
+ 000464                              456+Y0021    DS    0H                                                                        
+ 000464 5838 0000            00000   457+         L     3,0(8)                                                                    
+                                     458+*                                                                                        
+ 000468 5849 0000            00000   459+         L     4,0(9)                   load the next full word                          
+ 00046C 1C24                         460+         MR    2,4                      Multiply R2 and R4                               
+ 00046E 47F0 C472            00472   461+         B     X0021                                                                     
+ 000472                              462+X0021    DS    0H                                                                        
+ 000472 503A 0000            00000   463+         ST    3,0(10)                  store the largest number                         
+ 000476 9824 C458            00458   464+         LM    2,4,Z0021                restore registers                                
+ 00047A E020 C4D8 0020 004D8         465          XPRNT =CL32'0Finding the product of 8 and 35',32                                
+ 000480 45B0 C736            00736   466          BAL   11,POUT                                                                   
+ 000484 E020 C720 0015 00720         467          XPRNT PLINE,21                                                                  
+                                     468 *                                                                                        
+                                     469          PROD  RESULT,(=F'14',=F'32')                                                    
+ 00048A 9024 C494            00494   470+         STM   2,4,Z0022                                                                 
+ 00048E 47F0 C4A0            004A0   471+         B     Y0022                                                                     
+ 000494                              472+Z0022    DS    3F                                                                        
+ 0004A0                              473+Y0022    DS    0H                                                                        
+ 0004A0 5830 C548            00548   474+         L     3,=F'14'                                                                  
+                                     475+*                                                                                        
+ 0004A4 5840 C54C            0054C   476+         L     4,=F'32'                 load the next full word                          
+ 0004A8 1C24                         477+         MR    2,4                      Multiply R2 and R4                               
+ 0004AA 47F0 C4AE            004AE   478+         B     X0022                                                                     
+ 0004AE                              479+X0022    DS    0H                                                                        
+ 0004AE 5030 C708            00708   480+         ST    3,RESULT                 store the largest number                         
+ 0004B2 9824 C494            00494   481+         LM    2,4,Z0022                restore registers                                
+ 0004B6 45B0 C736            00736   482          BAL   11,POUT                                                                   
+ 0004BA E020 C66A 0021 0066A         483          XPRNT =CL33'0Finding the product of 14 and 32',33                               
+ 0004C0 E020 C720 0015 00720         484          XPRNT PLINE,21                                                                  
+                                     485 *                                                                                        
+                                     486 *  Standard exit linkage with return code = 0.                                           
+                                     487 *                                                                                        
+ 0004C6 17FF                         488          XR    15,15                   Put 0 in register 15                              
+ 0004C8 58DD 0004            00004   489          L     13,4(13)                Point register 13 at the calling                  
+                                     490 *                                      program's save area                               
+ 0004CC 58ED 000C            0000C   491          L     14,12(13)               Restore all registers except                      
+ 0004D0 980C D014            00014   492          LM    0,12,20(13)             15                                                
+ 0004D4 07FE                         493          BR    14                      Return to the calling program                     
+1                                                                                                               PAGE   10         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+                                                                                                                                  
+                                                                                                                                  
+                                     495 **********************************************************************                   
+                                     496 *          The storage section for DRIVER starts here.               *                   
+                                     497 **********************************************************************                   
+                                     498 *                                                                                        
+                                     499          LTORG                                                                           
+ 0004D8 F0C6899584899587             500                =CL32'0Finding the product of 8 and 35'                                   
+ 0004F8 00000001                     501                =F'1'                                                                     
+ 0004FC 40202120                     502                =XL4'40202120'                                                            
+ 000500 60D596A640A68540             503                =CL28'-Now we test the PROD macro.'                                       
+ 00051C F0C6899584899587             504                =CL36'0Finding the product of an empty set'                               
+ 000540 0000000C                     505                =F'12'                                                                    
+ 000544 FFFFFFEF                     506                =F'-17'                                                                   
+ 000548 0000000E                     507                =F'14'                                                                    
+ 00054C 00000020                     508                =F'32'                                                                    
+ 000550 F1D985A2A493A3A2             509                =CL26'1Results of testing Macros'                                         
+ 00056A 60D596A640A68540             510                =CL30'-Now we test the STRLEN macro.'                                     
+ 000588 F0C6899584899587             511                =CL34'0Finding the product of 8, 8 and 8'                                 
+ 0005AA F0C6899584899587             512                =CL42'0Finding the product of 8, 12, -10 and -17'                         
+ 0005D4 F0                           513                =C'0'                                                                     
+ 0005D5 F0E38885408183A3             514                =CL27'0The actual length is:    0'                                        
+ 0005F0 F0E38885408183A3             515                =CL27'0The actual length is:    3'                                        
+ 00060B F0C6899584899587             516                =CL25'0Finding the product of 8'                                          
+ 000624 F0C6899584899587             517                =CL33'0Finding the product of 8 and -10'                                  
+ 000645 F0C6899584899587             518                =CL37'0Finding the product of 8, 35 and -10'                              
+ 00066A F0C6899584899587             519                =CL33'0Finding the product of 14 and 32'                                  
+                                     520 *                                                                                        
+ 00068C FFFFFFFFFFFFFFFF             521 DRIVSAV  DC    18F'-1'                 Save area for linkage                             
+                                     522 *                                                                                        
+                                     523 * Variables for testing STRLEN                                                           
+ 0006D4 00                           524 S1       DC    X'00'                                                                     
+                                     525 *                                                                                        
+ 0006D5 C1C2C300                     526 S2       DC    XL4'C1C2C300'                                                             
+                                     527 *                                                                                        
+ 0006D9 000000                       528 S3       DC    XL3'000000'                                                               
+                                     529 *                                                                                        
+ 0006DC                              530 LENGTH   DS    F                                                                         
+                                     531 *                                                                                        
+ 0006E0 F0                           532 SLINE    DC    C'0'                                                                      
+ 0006E1 E388854083969497             533          DC    CL22'The computed length is'                                              
+ 0006F7                              534 SVALUE   DS    4C                                                                        
+                                     535 *                                                                                        
+ 000700                              536 TEMP     DS    D                                                                         
+                                     537 *                                                                                        
+                                     538 * Storage for testing PROD                                                               
+ 000708                              539 RESULT   DS    F                                                                         
+ 00070C 00000008                     540 ABC      DC    F'8'                                                                      
+ 000710 00000023                     541 DEF      DC    F'35'                                                                     
+ 000714 FFFFFFF6                     542 GHI      DC    F'-10'                                                                    
+                                     543 *                                                                                        
+ 000718 000007080000072A             544 PLIST    DC    A(RESULT,PRESULT)                                                         
+                                     545 *                                                                                        
+ 000720 F0                           546 PLINE    DC    C'0'                                                                      
+ 000721 D7D9D6C4E4C3E340             547          DC    CL9'PRODUCT ='                                                            
+ 00072A                              548 PRESULT  DS    CL11                                                                      
+                                     549 *                                                                                        
+1                                                                                                               PAGE   11         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+                                     550 **********************************************************************                   
+                                     551 *                                                                                        
+                                     552 * POUT is an internal subroutine to help print the results of PROD.                      
+                                     553 *                                                                                        
+                                     554 * Register 2 : address of RESULT, from 0(1)                                              
+                                     555 *          3 : address of PRESULT, from 4(1)                                             
+                                     556 *          4 : value of RESULT                                                           
+                                     557 *         11 : return address                                                            
+                                     558 *                                                                                        
+                                     559 **********************************************************************                   
+ 000736                              560 POUT     DS    0H                                                                        
+ 000736 9024 C758            00758   561          STM   2,4,POUTSAVE            Save registers                                    
+ 00073A 9823 1000            00000   562          LM    2,3,0(1)                Unload parameter list                             
+ 00073E 5840 2000            00000   563          L     4,0(0,2)                Get value of RESULT                               
+ 000742 4E40 C768            00768   564          CVD   4,PTEMP                                                                   
+ 000746 D20A 3000 C770 00000 00770   565          MVC   0(11,3),=XL11'40206B2020206B20212060'                                     
+ 00074C DE0A 3000 C76C 00000 0076C   566          ED    0(11,3),PTEMP+4         and put it on the line                            
+ 000752 9824 C758            00758   567          LM    2,4,POUTSAVE            Restore registers                                 
+ 000756 07FB                         568          BR    11                      Return to caller                                  
+ 000758                              569 POUTSAVE DS    3F                                                                        
+ 000768                              570 PTEMP    DS    D                                                                         
+                                     571 *                                                                                        
+                                     572 **********************************************************************                   
+                                     573 *                 The DRIVER program ends here.                      *                   
+                                     574 **********************************************************************                   
+                                     575          END   DRIVER                  End of the overall program.                       
+ 000770 40206B2020206B20             576                =XL11'40206B2020206B20212060'                                             
+0***  NO   STATEMENTS FLAGGED -  NO   WARNINGS,  NO   ERRORS                                                                      
+0*** DYNAMIC CORE AREA USED:  LOW:   26196 HIGH:    2596 LEAVING:  464776 FREE BYTES. AVERAGE:       49 BYTES/STMT ***            
+0*** ASSEMBLY TIME =    0.002 SECS,   288500 STATEMENTS/SEC ***                                                                   
+0*** PROGRAM EXECUTION BEGINNING - ANY OUTPUT BEFORE EXECUTION TIME MESSAGE IS PRODUCED BY USER PROGRAM ***                       
+1Results of testing Macros                                                                                                        
+0                                                                                                                                 
+-Now we test the STRLEN macro.                                                                                                    
+0The actual length is:    0                                                                                                       
+0The computed length is   0                                                                                                       
+0The actual length is:    3                                                                                                       
+0The computed length is   3                                                                                                       
+0The actual length is:    0                                                                                                       
+0The computed length is   0                                                                                                       
+0The actual length is:    3                                                                                                       
+0The computed length is   3                                                                                                       
+0The actual length is:    3                                                                                                       
+0The computed length is   3                                                                                                       
+0The actual length is:    3                                                                                                       
+0The computed length is   3                                                                                                       
+0                                                                                                                                 
+-Now we test the PROD macro.                                                                                                      
+0Finding the product of 8                                                                                                         
+0PRODUCT =         8                                                                                                              
+0Finding the product of 8 and -10                                                                                                 
+0PRODUCT =        80-                                                                                                             
+0Finding the product of 8, 35 and -10                                                                                             
+0PRODUCT =     2,800-                                                                                                             
+0Finding the product of 8, 8 and 8                                                                                                
+0PRODUCT =       512                                                                                                              
+0Finding the product of an empty set                                                                                              
+0PRODUCT =         1                                                                                                              
+0Finding the product of 8, 35 and -10                                                                                             
+0PRODUCT =     2,800-                                                                                                             
+0Finding the product of 8 and 35                                                                                                  
+0PRODUCT =       280                                                                                                              
+1Finding the product of 8, 12, -10 and -17                                                                                        
+0PRODUCT =    16,320                                                                                                              
+0Finding the product of 8 and 35                                                                                                  
+0PRODUCT =       280                                                                                                              
+0Finding the product of 14 and 32                                                                                                 
+0PRODUCT =       448                                                                                                              
+0*** EXECUTION TIME =    0.000 SECS.       369 INSTRUCTIONS EXECUTED -   369000 INSTRUCTIONS/SEC ***                              
+0*** FIRST CARD NOT READ: NO CARDS READ:FILE UNOPENED                                                                             
+0*** AM004 - NORMAL USER TERMINATION BY RETURN ***                                                                                
